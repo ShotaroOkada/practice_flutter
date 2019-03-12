@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "517688879651",
+    "firebase_url": "https://kasikari-memo-eeb18.firebaseio.com",
+    "project_id": "kasikari-memo-eeb18",
+    "storage_bucket": "kasikari-memo-eeb18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:517688879651:android:1ddc71daa2f3a3e9",
+        "android_client_info": {
+          "package_name": "com.example.first_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "517688879651-ho00lo67ivvnq15tgu7558c9p51nng03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGB14Lpf41CdrrZyZQP0qREDfQAEHJaGU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
