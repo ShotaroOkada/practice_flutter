@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -43,7 +44,14 @@ class _MyList extends State<List> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-        print("新規作成ボタンを押しました");
+          print("新規作成ボタンを押しました");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+            settings: const RouteSettings(name: "/new"),
+            builder: (BuildContext context) => InputForm()
+            ),
+          );
         }
       ),
     );
@@ -96,6 +104,21 @@ class _MyInputFormState extends State<InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _FormData _data = _FormData();
 
+  Future <DateTime> _selectTime(BuildContext context) {
+    return showDatePicker(
+      context: context,
+      initialDate: _data.date,
+      firstDate: DateTime(_data.date.year - 2),
+      lastDate: DateTime(_data.date.year + 2)
+    );
+  }
+
+void _setLendOrRent(String value){
+  setState(() {
+    _data.borrowOrLend = value;
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,15 +153,17 @@ class _MyInputFormState extends State<InputForm> {
                   title: Text("借りた"),
                   onChanged: (String value){
                     print("借りたをタッチしました");
+                    _setLendOrRent(value);
                   },
-
                 ),
+                
                 RadioListTile(
                     value: "lend",
                     groupValue: _data.borrowOrLend,
                     title: Text("貸した"),
                     onChanged: (String value) {
                       print("貸したをタッチしました");
+                      _setLendOrRent(value);
                     }
                 ),
 
@@ -167,6 +192,13 @@ class _MyInputFormState extends State<InputForm> {
                   child: const Text("締め切り⽇変更"),
                   onPressed: (){
                     print("締め切り⽇変更をタッチしました");
+                    _selectTime(context).then((time){
+                      if(time != null && time != _data.date){
+                        setState(() {
+                          _data.date = time;
+                        });
+                      }
+                    });
                   },
                 ),
             ],
