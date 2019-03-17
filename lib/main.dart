@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -69,14 +71,13 @@ class _MyList extends State<List> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection('kasikari-memo').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            stream: Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){ 
               if (!snapshot.hasData) return const Text('Loading...');
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 padding: const EdgeInsets.only(top: 10.0),
-                itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index]),
+                itemBuilder: (context, index) => _buildListItem(context, snapshot.data.documents[index]),
               );
             }
         ),
@@ -121,8 +122,7 @@ class _MyList extends State<List> {
                         context,
                         MaterialPageRoute(
                           settings: const RouteSettings(name: "/edit"),
-                          builder: (BuildContext context) =>
-                            InputForm(document)
+                          builder: (BuildContext context) => InputForm(document)
                         ),
                       );
                     }
@@ -297,17 +297,18 @@ void _setLendOrRent(String value){
   Widget build(BuildContext context) {
     //編集データの作成
     DocumentReference _mainReference;
-    _mainReference = Firestore.instance.collection('kasikari-memo').document();
-      if (widget.document != null) {//引数で渡したデータがあるかどうか
-        if(_data.user == null && _data.stuff == null) {
-          _data.borrowOrLend = widget.document['borrowOrLend'];
-          _data.user = widget.document['user'];
-          _data.stuff = widget.document['stuff'];
-          _data.date = widget.document['date'];
-        }
-        _mainReference = Firestore.instance.collection('kasikari-memo').
-        document(widget.document.documentID);
+    _mainReference = Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").document();
+    bool deleteFlg = false;
+    if (widget.document != null) {//引数で渡したデータがあるかどうか
+      if(_data.user == null && _data.stuff == null) {
+        _data.borrowOrLend = widget.document['borrowOrLend'];
+        _data.user = widget.document['user'];
+        _data.stuff = widget.document['stuff'];
+        _data.date = widget.document['date'];
       }
+      _mainReference = Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").document(widget.document.documentID);
+      deleteFlg = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('かしかり⼊⼒'),
