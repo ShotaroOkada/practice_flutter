@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // initialRoute: '/',
       title: 'かしかりメモ',
       routes: <String, WidgetBuilder>{
         '/': (_) =>  Splash(),
