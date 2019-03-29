@@ -49,8 +49,8 @@ class RandomWordsState extends State<RandomWords> {
   }
 
     Widget _buildRow(WordPair pair) {
-    return new ListTile(
-      title: new Text(
+    return ListTile(
+      title: Text(
         pair.asPascalCase, style: _biggerFont,
       ),
     );
