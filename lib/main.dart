@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:first_flutter/Home.dart';
+import 'package:first_flutter/KeyWord.dart';
+import 'package:first_flutter/Notification.dart';
+import 'package:first_flutter/Message.dart';
 
 void main() => runApp(new MyApp());
 
@@ -7,7 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primaryColor: Colors.white),
+      theme: ThemeData(
+        primaryColor: Colors.white,
+        accentColor: Colors.blue,
+        ),
       home: MyHomePage(),
     );
   }
@@ -19,6 +26,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  int currentIndex = 0;
+
+  List tabItemWidget = [
+    Home(),
+    KeyWord(),
+    Notifications(),
+    Message(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("ホーム"),
       ),
       body: Center(
-        child: Text("Hello World"),
+        child: tabItemWidget[currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
@@ -55,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _onTaped(int index) {
-    print(index);
+    setState(() {
+     currentIndex = index; 
+    });
   }
 }
