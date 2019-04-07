@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
         accentColor: Colors.blue,
-        ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -26,7 +26,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int currentIndex = 0;
 
   List tabItemWidget = [
@@ -36,12 +35,61 @@ class _MyHomePageState extends State<MyHomePage> {
     Message(),
   ];
 
+  List icons = [Icons.add, Icons.person_add, Icons.settings, Icons.mail];
+
+  List titles = ["ホーム", "キーワード", "通知", "メッセージ"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ホーム"),
-      ),
+      appBar: currentIndex != 1
+          ? AppBar(
+              title: Text(titles[currentIndex]),
+              actions: [
+                Container(
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: Icon(
+                    icons[currentIndex],
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+              leading: Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/icon2.jpg")))),
+            )
+          : AppBar(
+              title: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'キーワード検索',
+                ),
+              ),
+              centerTitle: true,
+              actions: [
+                 Container(
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: Icon(
+                    icons[currentIndex],
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+              leading: Container(
+                  margin: EdgeInsets.all(10.0),
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/icon1.jpg")))),
+            ),
       body: Center(
         child: tabItemWidget[currentIndex],
       ),
@@ -51,19 +99,31 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.blue,),
+            icon: Icon(
+              Icons.home,
+              color: Colors.blue,
+            ),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.blue,),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue,
+            ),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications, color: Colors.blue,),
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.blue,
+            ),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail, color: Colors.blue,),
+            icon: Icon(
+              Icons.mail,
+              color: Colors.blue,
+            ),
             title: Text(''),
           ),
         ],
@@ -73,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _onTaped(int index) {
     setState(() {
-     currentIndex = index; 
+      currentIndex = index;
     });
   }
 }
