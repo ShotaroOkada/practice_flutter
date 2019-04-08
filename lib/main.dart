@@ -25,39 +25,70 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+        appBar: AppBar(
+          title: Text("Material App"),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), 
-    );
+        body: ListView(
+            children: List.generate(5, (index) {
+          return InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePageDetail("images/screen$index.jpg")));
+            },
+            child: Card(
+              child: Column(
+                children: <Widget>[
+                  Image.asset("images/screen$index.jpg"),
+                  Container(
+                      margin: EdgeInsets.all(10.0),
+                      child: ListTile(
+                        title: Text("images/screen$index.jpg"),
+                        leading: Icon(Icons.person),
+                        subtitle: Text("サブタイトル"),
+                      )),
+                ],
+              ),
+            ),
+          );
+        })));
+  }
+}
+
+
+class MyHomePageDetail extends StatefulWidget {
+
+  String _imageName;
+  
+  MyHomePageDetail(String imageName){
+    this._imageName = imageName;
+  }
+  
+  @override
+  _MyHomePageDetailState createState() => new _MyHomePageDetailState();
+}
+
+class _MyHomePageDetailState extends State<MyHomePageDetail> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Material App"),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Image.asset(widget._imageName),
+              Container(
+                child: ListTile(
+                  title: Text(widget._imageName),
+                  leading: Icon(Icons.person),
+                  subtitle: Text("お写真ですこれは"),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
