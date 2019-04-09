@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:first_flutter/components/addHabitDialog.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,6 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            tooltip: '習慣を追加します',
+            onPressed: () {
+              addHabitDialog(context);
+              print("onPressed");
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -57,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
