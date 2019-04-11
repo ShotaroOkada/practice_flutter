@@ -6,11 +6,17 @@ enum _DialogActionType {
 }
 
 void addHabitDialog(BuildContext context) {
+  final myController = TextEditingController();
   showDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-          title: Text("タイトル"),
-          content: Text("本文"),
+          title: Text("習慣を作成"),
+          content: TextField(
+            controller: myController,
+            decoration: InputDecoration(
+                hintText: "名前",
+            ),
+          ),
           // ボタンの配置
           actions: <Widget>[
             FlatButton(
@@ -30,9 +36,11 @@ void addHabitDialog(BuildContext context) {
     switch (value) {
       case _DialogActionType.cancel:
         print("cancel...");
+        print(myController.text);
         break;
       case _DialogActionType.ok:
         print("OK!!");
+        print(myController.text);
         break;
       default:
         print("default");
